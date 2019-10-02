@@ -1,0 +1,8 @@
+language: java
+dist: xenial
+
+install: true
+script: mvn clean install -DskipTests=true
+
+jdk:
+  - openjdk11
