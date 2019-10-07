@@ -3,13 +3,19 @@ package com.for_comprehension.function.E02;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Optional;
+import java.util.Optional;
+import java.util.function.Function;
 
 class OptionalsRefactor {
 
-    private Person findPerson(int id) {
-        switch(id) {
+    private Optional<Person> findPersonAdapter(int id) {
+        return Optional.ofNullable(findPersonLegacy(id));
+    }
+
+    private Person findPersonLegacy(int id) {
+        switch (id) {
             case 1:
-                return new Person("James",48, 193, LocalDate.of(2000, Month.NOVEMBER, 1));
+                return new Person("James", 48, 193, LocalDate.of(2000, Month.NOVEMBER, 1));
             case 2:
                 return new Person("John", 62, 169, LocalDate.of(1989, Month.OCTOBER, 21));
             case 0:
@@ -19,14 +25,33 @@ class OptionalsRefactor {
         }
     }
 
-    private String findAddress(Person person) {
-        if (person.getBirthDate().isAfter(LocalDate.of(2000, Month.JANUARY, 1))) {
-            return "";
+    private Optional<Person> findPersonOptional(int id) {
+        switch (id) {
+            case 1:
+                return Optional.of(new Person("James", 48, 193, LocalDate.of(2000, Month.NOVEMBER, 1)));
+            case 2:
+                return Optional.of(new Person("John", 62, 169, LocalDate.of(1989, Month.OCTOBER, 21)));
+            default:
+                return Optional.empty();
         }
-        if (person.getBirthDate().isAfter(LocalDate.of(1980, Month.JANUARY, 1))) {
-            return " Some St.   ";
-        }
-        return null;
+    }
+
+    private Optional<String> findAddress(Person person) {
+        return Optional.ofNullable(person)
+          .map(personToAddress());
+    }
+
+    private Function<Person, String> personToAddress() {
+        return p -> {
+            if (p.getBirthDate().isAfter(LocalDate.of(2000, Month.JANUARY, 1))) {
+                return "";
+            }
+            if (p.getBirthDate().isAfter(LocalDate.of(1980, Month.JANUARY, 1))) {
+                return " Some St.   ";
+            }
+
+            return null;
+        };
     }
 
     private String findAddressById(int id) {
@@ -43,6 +68,11 @@ class OptionalsRefactor {
             }
         }
         return maybePerson.filter(person -> person.getHeight() > 168 );
+    private Optional<String> findAddressById(int id) {
+        return findPersonAdapter(id)
+          .filter(p -> p.getHeight() > 168)
+          .flatMap(p -> findAddress(p))
+          .map(address -> address.trim());
     }
 
     // ***
