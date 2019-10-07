@@ -67,6 +67,11 @@ public class OptionalDemo {
           .orElseGet(() -> new User(12312, "foo"));
     }
 
+    // Optional#get as a syntax sugar converting NPE to NoSuchElementException
+    @Test
+    public void example_6() throws Exception {
+        User user = findById(42).get(); // we know that this user always exists
+    }
 
     public static Optional<User> findById(int id) {
         if (id == 42) {
