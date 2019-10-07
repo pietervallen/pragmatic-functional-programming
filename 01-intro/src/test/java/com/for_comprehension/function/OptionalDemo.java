@@ -67,6 +67,25 @@ public class OptionalDemo {
           .orElseGet(() -> new User(12312, "foo"));
     }
 
+    // Optional#get as a syntax sugar converting NPE to NoSuchElementException
+    @Test
+    public void example_6() throws Exception {
+        User user = findById(42).get(); // we know that this user always exists
+    }
+
+    @Test
+    public void example_7() throws Exception {
+        findByIdNullName(42)
+          .map(user -> user.getName())
+          .map(name -> name.toUpperCase());
+
+    }
+
+    public static Optional<User> findByIdNullName(int id) {
+        if (id == 42) {
+            return Optional.of(new User(42, null));
+        } else return Optional.empty();
+    }
 
     public static Optional<User> findById(int id) {
         if (id == 42) {
