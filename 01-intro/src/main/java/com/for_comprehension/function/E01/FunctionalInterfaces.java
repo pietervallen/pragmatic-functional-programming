@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 final class FunctionalInterfaces {
+
     private FunctionalInterfaces() {
     }
 
@@ -17,7 +18,7 @@ final class FunctionalInterfaces {
      */
     static Supplier<Integer> L1_toConstant() {
         return () -> {
-            return null;
+            return 42;
         };
     }
 
@@ -26,7 +27,7 @@ final class FunctionalInterfaces {
      */
     static Function<String, String> L2_toUpperCase() {
         return s -> {
-            return null;
+            return s.toUpperCase();
         };
     }
 
@@ -35,7 +36,7 @@ final class FunctionalInterfaces {
      */
     static Function<String, Long> L3_toLong() {
         return s -> {
-            return null;
+            return Long.parseLong(s);
         };
     }
 
@@ -44,7 +45,7 @@ final class FunctionalInterfaces {
      */
     static IntPredicate L4_to42IntegerPredicate() {
         return i -> {
-            return true;
+            return i>42;
         };
     }
 
@@ -52,9 +53,7 @@ final class FunctionalInterfaces {
      * @return a higher-order function that takes an integer and returns a predicate validating if the input is bigger than the provided value
      */
     static Function<Integer, Predicate<Integer>> L5_toIntegerPredicate() {
-        return i -> {
-            return null;
-        };
+        return i -> param -> param > i;
     }
 
     /**
@@ -62,7 +61,7 @@ final class FunctionalInterfaces {
      */
     static Function<String, URI> L6_toURI() {
         return str -> {
-            return null;
+            return URI.create(str) ;
         };
     }
 
@@ -70,9 +69,7 @@ final class FunctionalInterfaces {
      * @return a function that takes a Supplier instance and converts it into a Callable instance
      */
     static <T> Function<Supplier<T>, Callable<T>> L7_toCallable() {
-        return s -> {
-            return null;
-        };
+        return supplier -> () -> supplier.get();
     }
 
     /**
@@ -80,8 +77,6 @@ final class FunctionalInterfaces {
      * the second one is applied directly to the result of the application of the first one
      */
     static <T> BinaryOperator<Function<T, T>> L8_functionComposition() {
-        return (f1, f2) -> {
-            return null;
-        };
+        return (f1, f2) -> f1.andThen(f2);
     }
 }
