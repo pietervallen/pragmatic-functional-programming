@@ -71,7 +71,7 @@ final class FunctionalInterfaces {
      */
     static <T> Function<Supplier<T>, Callable<T>> L7_toCallable() {
         return s -> {
-            return s::get;
+            return null;
         };
     }
 
