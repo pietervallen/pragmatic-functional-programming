@@ -69,7 +69,7 @@ class Optionals {
     }
 
     /**
-     * Get {@link Optionals.Person#name}, uppercase it,
+     * Get {@link Optionals.Person#name}
      * if empty string, treat as absent
      * or else return a default value (just leave above)
      * and then find age by calling {@link this#findAgeByName(String)}
