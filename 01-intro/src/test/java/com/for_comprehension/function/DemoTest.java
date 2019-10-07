@@ -2,12 +2,16 @@ package com.for_comprehension.function;
 
 import org.junit.Test;
 
+import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // Optional/Stream/CompletableFuture
 // Lambda Expressions
@@ -33,7 +37,7 @@ public class DemoTest {
 
     @Test
     public void example_2() throws Exception {
-        Function<Integer, Integer> fun = integer -> 42 + 24;
+        Function<Integer, Integer> fun = integer -> integer * 2;
 
         // Function<Integer, Void>
         Consumer<Integer> consumer = integer -> System.out.println(integer);
@@ -52,5 +56,28 @@ public class DemoTest {
 
         // Function<Integer, Boolean>
         Predicate<Integer> predicate = i -> i > 42;
+    }
+
+    @Test
+    public void example_3() throws Exception {
+        List<Integer> collect = Stream.of(42)
+          .filter(belowAge("USA"))
+          .collect(Collectors.toList());
+    }
+
+    @Test
+    public void example_4() throws Exception {
+        foo1((Supplier) () -> 42);
+        foo1((Callable) () -> 42);
+    }
+
+    private void foo1(Supplier runnable) {
+    }
+
+    private void foo1(Callable runnable) {
+    }
+
+    private Predicate<Integer> belowAge(String country) {
+        return u -> false;
     }
 }

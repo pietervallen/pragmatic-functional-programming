@@ -44,6 +44,8 @@ public class FunctionalInterfacesTest {
     public void l4_to42IntegerPredicateFalse(@InRange(minInt = 43) Integer input) {
         IntPredicate function = FunctionalInterfaces.L4_to42IntegerPredicate();
 
+        System.out.println(input);
+
         assertThat(function.test(input)).isEqualTo(true);
     }
 

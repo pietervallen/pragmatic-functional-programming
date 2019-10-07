@@ -1,5 +1,7 @@
 package com.for_comprehension.function.E01;
 
+import io.vavr.control.Option;
+
 import java.net.URI;
 import java.util.concurrent.Callable;
 import java.util.function.BinaryOperator;
@@ -50,7 +52,8 @@ final class FunctionalInterfaces {
     }
 
     /**
-     * @return a higher-order function that takes an integer and returns a predicate validating if the input is bigger than the provided value
+     * @return a higher-order function that takes an integer and returns a predicate validating
+     * if the input is bigger than the provided value
      */
     static Function<Integer, Predicate<Integer>> L5_toIntegerPredicate() {
         return i -> param -> param > i;
