@@ -9,6 +9,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -24,9 +26,9 @@ class Streams {
      * {@link Stream#map(Function)}
      */
     static Function<List<String>, List<String>> L1_upperCaseAll() {
-        return input -> {
-            return null;
-        };
+        return input -> input.stream()
+                .map(String::toUpperCase)
+                .collect(toList());
     }
 
     /**
@@ -34,9 +36,10 @@ class Streams {
      * {@link Stream#filter(Predicate)}
      */
     static Function<List<String>, List<String>> L2_upperCaseAllAndFilter() {
-        return input -> {
-            return null;
-        };
+        return input -> input.stream()
+                .map(String::toUpperCase)
+                .filter(s -> s.length()>=6)
+                .collect(toList());
     }
 
     /**
@@ -46,7 +49,9 @@ class Streams {
      */
     static Function<List<String>, String> L3_findTheLongestName() {
         return input -> {
-            return null;
+            return input.stream()
+                    .max(Comparator.comparing(String::length))
+                    .orElseThrow(IllegalArgumentException::new);
         };
     }
 
@@ -57,7 +62,9 @@ class Streams {
      */
     static Function<List<List<Integer>>, List<Integer>> L4_flatten() {
         return input -> {
-            return null;
+            return input.stream()
+                    .flatMap(Collection::stream)
+                    .collect(toList());
         };
     }
 
@@ -68,7 +75,9 @@ class Streams {
      */
     static Function<List<Integer>, List<Integer>> L5_distinctElements() {
         return input -> {
-            return null;
+            return input.stream()
+                    .distinct()
+                    .collect(toList());
         };
     }
 
@@ -77,7 +86,9 @@ class Streams {
      */
     static Function<List<Integer>, List<Integer>> L6_duplicateElements() {
         return input -> {
-            return null;
+            return input.stream()
+                    .flatMap(i -> Stream.of(i, i))
+                    .collect(toList());
         };
     }
 
@@ -89,7 +100,10 @@ class Streams {
      */
     static Function<List<Integer>, List<Integer>> L7_duplicateElementsNTimes(int givenNumberOfTimes) {
         return input -> {
-            return null;
+            return input.stream()
+                    .flatMap(i -> Stream.generate()
+                                        .limit(givenNumberOfTimes))
+                    .collect(toList());
         };
     }
 
