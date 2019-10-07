@@ -49,12 +49,11 @@ final class FunctionalInterfaces {
     }
 
     /**
-     * @return a higher-order function that takes an integer and returns a predicate validating if the input is bigger than the provided value
+     * @return a higher-order function that takes an integer and returns a predicate validating
+     * if the input is bigger than the provided value
      */
     static Function<Integer, Predicate<Integer>> L5_toIntegerPredicate() {
-        return i -> {
-            return null;
-        };
+        return param -> (integer -> integer > param);
     }
 
     /**
