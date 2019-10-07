@@ -2,6 +2,7 @@ package com.for_comprehension.function.E02;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Optional;
 
 class OptionalsRefactor {
 
@@ -29,20 +30,20 @@ class OptionalsRefactor {
     }
 
     private String findAddressById(int id) {
-        final Person personOrNull = findPerson(id);
-        if (personOrNull != null) {
-            if (personOrNull.getHeight() > 168) {
-                final String addressOrNull = findAddress(personOrNull);
-                if (addressOrNull != null && !addressOrNull.isEmpty()) {
-                    return addressOrNull.trim();
-                } else {
-                    return null;
+        final Optional<Person> maybePerson = Optional.ofNullable(findPerson(id));
+
+        maybePerson.
+
+        if (maybePerson.isPresent()) {
+            if (maybePerson.get().getHeight() > 168) {
+                final Optional<String> maybeAddress = Optional.ofNullable(findAddress(maybePerson.get()));
+                if (maybeAddress.isPresent()) {
+                    return maybeAddress.get().trim();
                 }
             }
         }
-        return null;
+        return maybePerson.filter(person -> person.getHeight() > 168 );
     }
-
 
     // ***
     // DON"T CHANGE ANYTHING BEYOND THIS POINT

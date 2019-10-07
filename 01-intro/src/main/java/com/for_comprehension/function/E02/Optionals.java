@@ -74,7 +74,11 @@ class Optionals {
      * Hint: {@link Optional#flatMap(Function)}
      */
     static Function<Integer, Integer> L6_nestedOptionals() {
-        return id -> null;
+        return id -> findOneById(id)
+                .map(person -> person.getName())
+                .filter(name -> !name.isEmpty())
+                .flatMap(age -> findAgeByName(age))
+                .orElse(42);
     }
 
 
