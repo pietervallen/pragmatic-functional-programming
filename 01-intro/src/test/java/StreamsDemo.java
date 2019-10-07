@@ -123,6 +123,14 @@ public class StreamsDemo {
           .collect(Collectors.toList());
     }
 
+    @Test
+    public void example_8() throws Exception {
+        Stream.iterate(0, i -> i + 1)
+          .skip(3)
+          .limit(10)
+          .forEach(System.out::println);
+    }
+
     private Integer sendEmail(Integer i) {
         System.out.println("sending email for " + i);
         return i;
