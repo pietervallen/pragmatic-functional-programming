@@ -1,5 +1,7 @@
 package com.for_comprehension.function.E01;
 
+import io.vavr.control.Option;
+
 import java.net.URI;
 import java.util.concurrent.Callable;
 import java.util.function.BinaryOperator;
@@ -69,9 +71,7 @@ final class FunctionalInterfaces {
      * @return a function that takes a Supplier instance and converts it into a Callable instance
      */
     static <T> Function<Supplier<T>, Callable<T>> L7_toCallable() {
-        return s -> {
-            return null;
-        };
+        return s -> s::get;
     }
 
     /**
