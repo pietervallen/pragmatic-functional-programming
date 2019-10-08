@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
@@ -121,6 +122,21 @@ public class StreamsDemo {
               System.out.println(Thread.currentThread().getName() + " : " + i);
               return i;
           })
+          .collect(Collectors.toList());
+    }
+
+    @Test
+    public void example_8() throws Exception {
+        Stream.iterate(0, i -> i + 1)
+          .skip(3)
+          .limit(10)
+          .forEach(System.out::println);
+    }
+
+    @Test
+    public void example_9() throws Exception {
+        IntStream.iterate(0, i -> i + 1)
+          .boxed()
           .collect(Collectors.toList());
     }
 

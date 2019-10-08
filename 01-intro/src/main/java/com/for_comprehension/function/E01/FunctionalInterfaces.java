@@ -1,7 +1,5 @@
 package com.for_comprehension.function.E01;
 
-import io.vavr.control.Option;
-
 import java.net.URI;
 import java.util.concurrent.Callable;
 import java.util.function.BinaryOperator;
