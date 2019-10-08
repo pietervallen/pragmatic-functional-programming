@@ -1,6 +1,7 @@
 package com.for_comprehension.function.E03;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -101,7 +102,7 @@ class Streams {
     static Function<List<Integer>, List<Integer>> L7_duplicateElementsNTimes(int givenNumberOfTimes) {
         return input -> {
             return input.stream()
-                    .flatMap(i -> Stream.generate()
+                    .flatMap(i -> Stream.generate(()-> i)
                                         .limit(givenNumberOfTimes))
                     .collect(toList());
         };
@@ -113,7 +114,9 @@ class Streams {
      */
     static Supplier<List<Integer>> L8_generate3s() {
         return () -> {
-            return null;
+            return Stream.iterate(0, (i) -> i + 3)
+                    .limit(10)
+                    .collect(toList());
         };
     }
 
@@ -124,7 +127,12 @@ class Streams {
      */
     static Supplier<List<Integer>> L9_leapYears() {
         return () -> {
-            return null;
+            return Stream.iterate(2000, (i) -> (i + 1))
+                    .map(i -> LocalDate.ofYearDay(i,1))
+                    .filter(LocalDate::isLeapYear)
+                    .limit(5)
+                    .map(y -> y.getYear())
+                    .collect(toList());
         };
     }
 
@@ -134,10 +142,17 @@ class Streams {
      * {@link Stream#concat(Stream, Stream)}
      * {@link Stream#skip(long)}
      * {@link Stream#limit(long)}
+     *
+     * [1,2,3,4]
+     * [4,1,2,3]
+     * [3,4,1,2]
      */
     static UnaryOperator<List<Integer>> L10_rotate(int n) {
         return input -> {
-            return null;
+            return Stream.concat(
+                    input.stream().skip(n),
+                    input.stream().limit(n)
+            ).collect(toList());
         };
     }
 
@@ -147,7 +162,10 @@ class Streams {
      */
     static Predicate<List<Double>> L11_sum() throws IllegalStateException {
         return input -> {
-            return false;
+            return input.stream()
+                    .reduce((i1, i2) -> i1 + i2)
+                    .filter((i) -> i == 100)
+                    .isPresent();
         };
     }
 
@@ -158,7 +176,10 @@ class Streams {
      */
     static Function<List<Optional<Integer>>, List<Integer>> L12_filterPresent() {
         return list -> {
-            return null;
+            return list.stream()
+                    .filter((elem) -> elem.isPresent())
+                    .flatMap((elem) -> Stream.of(elem.get()))
+                    .collect(toList());
         };
     }
 }

@@ -64,6 +64,7 @@ public class StreamsDemo {
 
         Integer reduce2 = integers.stream()
           .reduce(0, (i1, i2) -> i1 + i2);
+        System.out.println("Reduce2: " + reduce2);
 
         integers.stream()
           .forEach(s -> System.out.println(s));
