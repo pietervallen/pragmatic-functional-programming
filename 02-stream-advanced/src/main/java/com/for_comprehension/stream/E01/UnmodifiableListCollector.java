@@ -26,7 +26,7 @@ public class UnmodifiableListCollector<T> implements Collector<T, ArrayList<T>, 
      * assumes that the target is mutable
      */
     public static void main(String[] args) {
-        List<Integer> list = Stream.of(42).collect(toUnmodifiableList());
+        List<Integer> list = Stream.of(42).collect(toUnmodifiableList() );
         // see test: l1_collectImmutable
     }
 
