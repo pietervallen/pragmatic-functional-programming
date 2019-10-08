@@ -46,12 +46,14 @@ class CollectorsExercises {
     }
 
     /**
-     * Collect elements to a {@link Map} instance with uppercased elements as keys and their corresponding lengths as values
+     * Collect elements to a {@link Map} instance with uppercased elements as keys
+     * and their corresponding lengths as values
      * and resolve potential collisions
      */
     static Function<List<String>, Map<String, Integer>> L4_toMap() {
         return list -> {
-            return null;
+            return list.stream()
+              .collect(Collectors.toMap(String::toUpperCase, String::length, (i, i2) -> i));
         };
     }
 
