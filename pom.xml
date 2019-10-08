@@ -11,6 +11,7 @@
 
     <modules>
         <module>01-intro</module>
+        <module>02-stream-advanced</module>
     </modules>
 
     <build>
