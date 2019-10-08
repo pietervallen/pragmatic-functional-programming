@@ -116,6 +116,11 @@ class Streams {
     }
 
 
+
+    // [1,2,3,4] -> [2,3,4,1] -> [3,4,1,2] -> [4,1,2,3]
+    // [1,2,3,4] + [1,2,3,4]
+    // [1,2,3,4,1,2,3,4]
+
     /**
      * Rotate a list N places to the left
      * {@link Stream#concat(Stream, Stream)}
@@ -124,7 +129,11 @@ class Streams {
      */
     static UnaryOperator<List<Integer>> L10_rotate(int n) {
         return input -> {
-            return null;
+            return Stream.concat(input.stream(), input.stream())
+              .skip(n % input.size())
+              .limit(input.size())
+              .collect(toList());
+
         };
     }
 
