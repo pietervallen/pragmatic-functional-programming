@@ -1,10 +1,8 @@
 package com.for_comprehension.function.E04;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import com.sun.javafx.UnmodifiableArrayList;
+
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -21,28 +19,21 @@ class CollectorsExercises {
      * Collect elements to a {@link List} instance
      */
     static Function<List<String>, List<String>> L1_toList() {
-        return list -> {
-            return null;
-        };
+        return ArrayList::new;
     }
 
     /**
      * Collect elements to a {@link LinkedList} instance
      */
     static Function<List<String>, LinkedList<String>> L2_toLinkedList() {
-        return list -> {
-            return null;
-        };
+        return LinkedList::new;
     }
 
     /**
      * Collect elements to a {@link List} wrapped in {@link Collections#unmodifiableList(List)} instance
      */
     static Function<List<String>, List<String>> L3_unmodifiable() {
-        return list -> {
-            // Collectors.collectingAndThen()
-            return null;
-        };
+        return Collections::unmodifiableList;
     }
 
     /**
@@ -50,20 +41,17 @@ class CollectorsExercises {
      * and resolve potential collisions
      */
     static Function<List<String>, Map<String, Integer>> L4_toMap() {
-        return list -> {
-            return null;
-        };
+        return list -> list.stream()
+                .collect(Collectors.toMap(String::toUpperCase, String::length, (i, i2) -> i));
     }
-
 
     /**
      * Collect elements to a {@link TreeMap} instance with elements as keys and their corresponding lengths as values
      * and resolve potential collisions by picking any of the strings
      */
     static Function<List<String>, Map<String, Integer>> L5_toTreeMap() {
-        return list -> {
-            return null;
-        };
+        return list -> list.stream()
+                .collect(Collectors.toMap(String::toUpperCase, String::length, (i, i2) -> i, TreeMap::new));
     }
 
     /**
