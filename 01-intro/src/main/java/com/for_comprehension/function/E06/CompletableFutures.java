@@ -3,6 +3,7 @@ package com.for_comprehension.function.E06;
 import com.for_comprehension.function.misc.User;
 import com.for_comprehension.function.misc.UsersClient;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -41,6 +42,44 @@ class CompletableFutures {
           .collect(Collectors.toList());
 
         CompletableFuture.allOf(collect.toArray(new CompletableFuture[0]));
+
+        CompletableFuture<Integer> cf1 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return 1;
+        });
+
+        CompletableFuture<Integer> cf2 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return 2;
+        });
+
+        CompletableFuture<Integer> cf3 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return 3;
+        });
+
+        System.out.println(cf1.applyToEither(cf2, integer -> integer)
+          .applyToEither(cf3, integer -> integer)
+          .join());
+
+        CompletableFuture<Integer> completableFuture = CompletableFuture.anyOf(cf1, cf2)
+          .thenApply(i -> (Integer) i);
+
+
+
+
     }
 
     private static final ExecutorService executor = Executors.newFixedThreadPool(20);
@@ -105,7 +144,7 @@ class CompletableFutures {
      */
     static BiFunction<CompletableFuture<Integer>, CompletableFuture<Integer>, CompletableFuture<Integer>> L6_composeFutures() {
         return (f1, f2) -> {
-            return null;
+            return f1.applyToEither(f2, i -> i);
         };
     }
 
@@ -116,7 +155,9 @@ class CompletableFutures {
      */
     static <T> BiFunction<CompletableFuture<T>, CompletableFuture<T>, T> L7_returnValueOfTheFirstCompleted() {
         return (f1, f2) -> {
-            return null;
+            return CompletableFuture.anyOf(f1, f2)
+              .thenApply(i -> (T) i)
+              .join();
         };
     }
 
