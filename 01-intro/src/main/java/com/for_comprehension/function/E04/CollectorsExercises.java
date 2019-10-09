@@ -5,13 +5,9 @@ import com.sun.javafx.UnmodifiableArrayList;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toCollection;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 class CollectorsExercises {
 
@@ -60,7 +56,13 @@ class CollectorsExercises {
      */
     static Function<Map<String, String>, String> L6_toJson() {
         return input -> {
-            return null;
+
+          String output =  input.forEach();
+
+//                    input.forEach((k,v) -> return k+v);
+return output;
+//                    Collectors.joining(":","{","}"))
+//                    .;
         };
     }
 
