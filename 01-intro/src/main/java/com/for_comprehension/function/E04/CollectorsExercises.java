@@ -57,12 +57,12 @@ class CollectorsExercises {
     static Function<Map<String, String>, String> L6_toJson() {
         return input -> {
 
-          String output =  input.forEach();
-
+//          String output =  input.forEach();
 //                    input.forEach((k,v) -> return k+v);
-return output;
+//return output;
 //                    Collectors.joining(":","{","}"))
 //                    .;
+            return null;
         };
     }
 
