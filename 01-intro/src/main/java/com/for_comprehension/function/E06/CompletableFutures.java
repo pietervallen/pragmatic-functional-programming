@@ -3,6 +3,7 @@ package com.for_comprehension.function.E06;
 import com.for_comprehension.function.misc.User;
 import com.for_comprehension.function.misc.UsersClient;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -108,7 +109,8 @@ class CompletableFutures {
      */
     static BiFunction<CompletableFuture<Integer>, CompletableFuture<Integer>, CompletableFuture<Integer>> L6_composeFutures() {
         return (f1, f2) -> {
-            return null;
+            return f1.applyToEither(f2, integer -> integer);
+
         };
     }
 
@@ -119,7 +121,7 @@ class CompletableFutures {
      */
     static <T> BiFunction<CompletableFuture<T>, CompletableFuture<T>, T> L7_returnValueOfTheFirstCompleted() {
         return (f1, f2) -> {
-            return null;
+            return CompletableFuture.anyOf(f1, f2).thenApply(o -> (T) o ).join();
         };
     }
 
@@ -130,7 +132,10 @@ class CompletableFutures {
      */
     static <T> Function<List<CompletableFuture<T>>, CompletableFuture<List<T>>> L8_returnResultsAsList() {
         return futures -> {
-            return null;
+            return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                    .thenApply(__ -> futures.stream()
+                            .map(CompletableFuture::join)
+                            .collect(Collectors.toList()));
         };
     }
 }
