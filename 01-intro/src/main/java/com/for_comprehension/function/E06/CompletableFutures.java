@@ -168,7 +168,10 @@ class CompletableFutures {
      */
     static <T> Function<List<CompletableFuture<T>>, CompletableFuture<List<T>>> L8_returnResultsAsList() {
         return futures -> {
-            return null;
+            return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+              .thenApply(__ -> futures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList()));
         };
     }
 }
