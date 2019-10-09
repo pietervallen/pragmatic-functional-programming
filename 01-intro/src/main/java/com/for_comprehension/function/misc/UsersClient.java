@@ -20,6 +20,10 @@ public class UsersClient {
         });
     }
 
+    public CompletableFuture<User> getUserByIdAsync(Integer id) {
+       return CompletableFuture.supplyAsync(() -> getUserById(id));
+    }
+
     public CompletableFuture<String> getAddressByUser(User user) {
         return CompletableFuture.supplyAsync(() -> supplyAndMeter(
           () -> {

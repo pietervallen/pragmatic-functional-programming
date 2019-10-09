@@ -64,11 +64,26 @@ public class CompletableFuturesTest {
 
     @Test
     public void l6_composeFutures() {
-        String result = CompletableFutures.L6_composeFutures().apply(1).join();
+        CompletableFuture<Integer> f1 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return 1;
+        });
 
-        assertThat(result)
-          .contains("Street")
-          .contains("1");
+        CompletableFuture<Integer> f2 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return 2;
+        });
+        Integer result = CompletableFutures.L6_composeFutures().apply(f1, f2).join();
+
+        assertThat(result).isEqualTo(2);
     }
 
     @Test
