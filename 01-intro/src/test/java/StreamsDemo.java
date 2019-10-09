@@ -3,16 +3,22 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toSet;
 
 // Stream<T>
 // Stream.of(), Stream.generate(), Stream.iterate(), Collections#stream()
@@ -52,7 +58,7 @@ public class StreamsDemo {
           .collect(Collectors.toList());
 
         Set<Integer> collect2 = integers.stream()
-          .collect(Collectors.toSet());
+          .collect(toSet());
 
         Map<Integer, List<String>> collect1 =
           Stream.of("a", "bb", "ccc", "dd")
@@ -138,6 +144,27 @@ public class StreamsDemo {
         IntStream.iterate(0, i -> i + 1)
           .boxed()
           .collect(Collectors.toList());
+    }
+
+    @Test
+    public void example_10() throws Exception {
+        List<Integer> integers = asList(1, 2, 3);
+
+        Set<Integer> collect = integers.stream()
+          .collect(Collectors.collectingAndThen(toSet(), Collections::unmodifiableSet));
+
+        collect.add(42);
+    }
+
+    @Test
+    public void example_11() throws Exception {
+
+        List<String> strings = asList("aaa", "bbb", "cc", "d", "bbb");
+
+        Map<String, Integer> collect = strings.stream()
+          .collect(Collectors.toMap(String::toUpperCase, String::length, (i, i2) -> i, TreeMap::new));
+
+        System.out.println(collect);
     }
 
     private Integer sendEmail(Integer i) {

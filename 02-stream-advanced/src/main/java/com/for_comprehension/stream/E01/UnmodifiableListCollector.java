@@ -26,28 +26,28 @@ public class UnmodifiableListCollector<T> implements Collector<T, ArrayList<T>, 
      * assumes that the target is mutable
      */
     public static void main(String[] args) {
-        List<Integer> list = Stream.of(42).collect(toCollection(() -> Collections.unmodifiableList(new ArrayList<>())));
+        List<Integer> list = Stream.of(42).collect(toUnmodifiableList() );
         // see test: l1_collectImmutable
     }
 
     @Override
     public Supplier<ArrayList<T>> supplier() {
-        return null;
+        return ArrayList::new;
     }
 
     @Override
     public BiConsumer<ArrayList<T>, T> accumulator() {
-        return null;
+        return ArrayList::add;
     }
 
     @Override
     public BinaryOperator<ArrayList<T>> combiner() {
-        return (ts, ts2) -> null;
+        return (ts, ts2) -> Stream.concat(ts.stream(), ts2.stream()).collect(toCollection(ArrayList::new));
     }
 
     @Override
     public Function<ArrayList<T>, List<T>> finisher() {
-        return null;
+        return Collections::unmodifiableList;
     }
 
     @Override
