@@ -3,14 +3,17 @@ package com.for_comprehension.function.E06;
 import com.for_comprehension.function.misc.User;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.concurrent.CompletableFuture.completedFuture;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CompletableFuturesTest {
@@ -80,5 +83,18 @@ public class CompletableFuturesTest {
         String result = f.apply(f1, f2);
 
         assertThat(result).isEqualTo("42");
+    }
+
+    @Test
+    public void l8_returnResultsAsList() {
+        Function<List<CompletableFuture<Integer>>, CompletableFuture<List<Integer>>> f = CompletableFutures
+          .L8_returnResultsAsList();
+
+        List<CompletableFuture<Integer>> futures = Arrays.asList(completedFuture(1), completedFuture(2));
+
+        CompletableFuture<List<Integer>> apply = f.apply(futures);
+
+        assertThat(apply)
+          .isCompletedWithValueMatching(list -> list.contains(1) && list.contains(2));
     }
 }
