@@ -26,6 +26,7 @@ class CompletableFutures {
      */
     static Consumer<CompletableFuture<Integer>> L1_manualCompletion() {
         return f -> {
+            f.complete(42);
         };
     }
 
@@ -75,14 +76,13 @@ class CompletableFutures {
     }
 
     /**
-     * Run {@link com.for_comprehension.function.misc.UsersClient#getUserById(Integer)}
-     * on two different ids and return the one that returns first!
+     * Return a combined future which completes with a value of the first completed future
      *
      * {@link CompletableFuture#thenCombine(CompletionStage, BiFunction)}
      *
      */
-    static Function<Integer, CompletableFuture<String>> L6_composeFutures() {
-        return (id) -> {
+    static BiFunction<CompletableFuture<Integer>, CompletableFuture<Integer>, CompletableFuture<Integer>> L6_composeFutures() {
+        return (f1, f2) -> {
             return null;
         };
     }
