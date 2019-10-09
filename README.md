@@ -1,1 +1,11 @@
-# ng_be
+### Day 3
+- ...Stream exercises
+- CompletableFuture exercises
+- Parallel Stream
+- Spliterators*
+- 
+- Functional Exception Handling
+- Intersection Types in Java
+- Sealed Types in Java
+- Modularity
+- Stream Katas

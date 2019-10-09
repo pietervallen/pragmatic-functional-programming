@@ -1,6 +1,5 @@
 package com.for_comprehension.function;
 
-import com.pivovarit.collectors.ParallelCollectors;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -8,10 +7,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.pivovarit.collectors.ParallelCollectors.parallelToList;
 
@@ -47,7 +45,10 @@ public class ParallelStreams {
     public void example_3() {
         List<Integer> integers = Arrays.asList(1, 2, 3);
 
-        ExecutorService executorService = Executors.newFixedThreadPool(10, r -> new Thread(r, UUID.randomUUID().toString()));
+        ExecutorService executorService = new ThreadPoolExecutor(10, 10,
+          0L, TimeUnit.MILLISECONDS,
+          new LinkedBlockingQueue<Runnable>(),
+          r -> new Thread(r, UUID.randomUUID().toString()));
 
         List<Integer> join = integers.stream()
           .collect(parallelToList(i -> getAnIntWithDelay(i), executorService, 10))

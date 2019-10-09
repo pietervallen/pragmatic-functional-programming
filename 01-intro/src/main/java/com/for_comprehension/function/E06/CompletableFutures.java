@@ -43,7 +43,7 @@ class CompletableFutures {
      */
     static Function<Integer, CompletableFuture<User>> L3_runAsync() {
         return id -> {
-            return null;
+            return CompletableFuture.supplyAsync(() -> new UsersClient().getUserById(id));
         };
     }
 
@@ -55,7 +55,7 @@ class CompletableFutures {
      */
     static BiFunction<Integer, ExecutorService, CompletableFuture<User>> L4_runAsyncOnACustomPool() {
         return (id, executor) -> {
-            return null;
+            return CompletableFuture.supplyAsync(() -> new UsersClient().getUserById(id), executor);
         };
     }
 
@@ -68,7 +68,12 @@ class CompletableFutures {
      */
     static BiFunction<Integer, Integer, CompletableFuture<List<User>>> L5_runAsyncAndCombine() {
         return (id, id2) -> {
-            return null;
+            CompletableFuture<User> u1 = CompletableFuture
+              .supplyAsync(() -> usersClient.getUserById(id));
+            CompletableFuture<User> u2 = CompletableFuture
+              .supplyAsync(() -> usersClient.getUserById(id2));
+
+            return u1.thenCombine(u2, (user, user2) -> Arrays.asList(user, user2));
         };
     }
 
